@@ -11,20 +11,12 @@
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
     <script type="text/babel">
-      const button = <button>hello</button>;
-      const paragraph = <p>paragraph of text</p>;
-
-      const div = (
-        <div>
-          <button>hello</button>
-          <p>paragraph of text {2 + 2}</p>
-        </div>
-      );
-
+    
 
       const container = document.querySelector('.js-container');
-      ReactDOM.createRoot(container).render(div);
+      ReactDOM.createRoot(container).render(console.log(dayjs().format('MMMM D')));
     </script>
   </body>
 </html>
