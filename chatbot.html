@@ -13,20 +13,24 @@
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
     <script type="text/babel">
-      function ChatInput({ chatMessages, setChatMessages}) {
-        const[inputText, setInputText] = react.useState('');
-        function saveInputText(event){
+      function ChatInput({ chatMessages, setChatMessages }) {
+        const [inputText, setInputText] = React.useState('');
+      
+      function saveInputText(event){
           setInputText(event.target.value);
-        }
-        function sendMessage(){
-            setChatMessages([
+      }
+      
+      function sendMessage(){
+        setChatMessages([
           ...chatMessages,
-          {message: 'test',
+          {
+            message: inputText,
             sender: 'user',
             id: crypto.randomUUID()
           }
           ]);
         }
+        
        return (
         <>
           <input 
@@ -53,9 +57,8 @@
             )}
           </div>
         );
-
       }
-      function ChatMessages({ chatMessages }) {       
+      function ChatMessages({ chatMessages }){       
         return (
           <>
             {chatMessages.map((chatMessage) => {
@@ -73,7 +76,7 @@
 
       function App(){
                
-        const [chatMessages,setChatMessages] = React.useState([{
+        const [chatMessages, setChatMessages] = React.useState([{
           message: 'hello chatbot',
           sender: 'user',
           id: 'id1'
@@ -103,7 +106,7 @@
             chatMessages={chatMessages}
             setChatMessages={setChatMessages}
           />
-          <ChatMessages 
+           <ChatMessages 
             chatMessages={chatMessages}
           />
         </>
