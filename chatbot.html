@@ -2,6 +2,11 @@
 <html>
   <head>
     <title>Chatbot</title>
+    <style>
+      button {
+        background-color: green;
+      }
+    </style>
   </head>
   <body>
     <div class="js-container"></div>
@@ -14,13 +19,15 @@
     <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
     <script type="text/babel">
       function ChatInput({ chatMessages, setChatMessages }) {
+
         const [inputText, setInputText] = React.useState('');
       
       function saveInputText(event){
           setInputText(event.target.value);
       }
       
-      function sendMessage(){
+      async function sendMessage(){
+        setInputText('');
         const newChatMessages = [
           ...chatMessages,
           {
@@ -29,9 +36,16 @@
             id: crypto.randomUUID()
           }
           ]
-        setChatMessages(newChatMessages);
-
-          const response = Chatbot.getResponse(inputText);
+          setChatMessages([
+          ...newChatMessages,
+          {
+            message: 'Loading...',
+            sender: 'robot',
+            id: crypto.randomUUID()
+          }
+          ]);
+          const response = await Chatbot.getResponseAsync(inputText);
+          
           setChatMessages([
           ...newChatMessages,
           {
@@ -40,9 +54,17 @@
             id: crypto.randomUUID()
           }
           ]);
+        }
+        function onKeyDown(event){
+        if(event.key === 'Enter'){
+          sendMessage();
+          setInputText('');
+        } 
+        else if(event.key === 'Escape'){
           setInputText('');
         }
-        
+
+        }
        return (
         <>
           <input 
@@ -50,6 +72,7 @@
             size="30" 
             onChange={saveInputText}
             value={inputText}
+            onKeyDown={onKeyDown}
           />
           <button
             onClick={sendMessage}
@@ -88,7 +111,7 @@
       }
 
       function App(){
-               
+           
         const [chatMessages, setChatMessages] = React.useState([{
           message: 'hello chatbot',
           sender: 'user',
