@@ -5,6 +5,8 @@
     <style>
       body {
         font-family: Arial;
+        margin-top: 0px;
+        margin-bottom: 0px;
       }
       .send-button {
         background-color: rgb(25, 135, 84);
@@ -27,11 +29,16 @@
       }
       .chat-input-container {
         display: flex;
+        margin-bottom: 60px;
       }
       .app-container {
-        max-width: 599px;
+        max-width: 600px;
         margin-left: auto;
         margin-right: auto;
+
+        height:  100vh;
+        display: flex;
+        flex-direction: column;
       }
       .chat-message-user {
         display: flex;
@@ -53,6 +60,12 @@
       }
       .chat-message-profile{
         width: 45px;
+      }
+      .chat-messages-container {
+        flex-grow: 1;
+        margin-top: 20px;
+        overflow: scroll;
+        scrollbar-width: none;
       }
     </style>
   </head>
@@ -152,9 +165,23 @@
           </div>
         );
       }
-      function ChatMessages({ chatMessages }){       
+      function ChatMessages({ chatMessages }){  
+        const chatMessagesRef = React.useRef
+        (null);
+
+        React.useEffect(() => {
+         const containerElem = 
+         chatMessagesRef.current;
+         if(containerElem) {
+          containerElem.scrollTop = containerElem.
+          scrollHeight;
+         }          
+        }, [chatMessages]);
+
         return (
-          <>
+          <div 
+          className="chat-messages-container"
+          ref={chatMessagesRef}>
             {chatMessages.map((chatMessage) => {
               return (
                 <ChatMessage 
@@ -164,7 +191,7 @@
                 />
               );
             })}
-         </>
+         </div>
         );
       }
 
@@ -196,12 +223,12 @@
         //^^const [chatMessages,setChatMessages] = array^^
        return( 
         <div className="app-container">
+          <ChatMessages 
+            chatMessages={chatMessages}
+          />
           <ChatInput 
             chatMessages={chatMessages}
             setChatMessages={setChatMessages}
-          />
-           <ChatMessages 
-            chatMessages={chatMessages}
           />
         </div>
        );
