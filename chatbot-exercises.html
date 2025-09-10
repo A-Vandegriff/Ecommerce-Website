@@ -2,8 +2,25 @@
 <html>
   <head>
     <title>React Basics</title>
+     <style>
+        .button {
+          background-color: rgb(25,135,84);
+          padding: 10px 15px;
+          border-radius: 5px;
+          color: white;
+          border: none;
+        }
+        .false {
+          background-color: rgb(220,53,69);
+          padding: 10px 15px;
+          border-radius: 5px;
+          color: white;
+          border: none;
+        }
+      </style> 
   </head>
   <body>
+ 
     <div class="js-container"></div>
  
 
@@ -15,8 +32,18 @@
     <script type="text/babel">
       
       function App(){
-      
-      return(
+          const [isButtonOn,setButton] = React.useState(true);
+        function Button(){
+          {isButtonOn ? (setButton(false)) : (setButton(true))}
+        }   
+        
+      return(      
+        <button
+
+          className={isButtonOn ? 'button' : 'false'}
+          onClick={Button}>
+          {isButtonOn ? 'ON' : 'OFF'}
+        </button>
       );
       }
 
