@@ -39,6 +39,7 @@
         height:  100vh;
         display: flex;
         flex-direction: column;
+        text-align: center;
       }
       .chat-message-user {
         display: flex;
@@ -66,6 +67,10 @@
         margin-top: 20px;
         overflow: scroll;
         scrollbar-width: none;
+      }
+      .spinner {
+        height: 40px;
+        margin: -15px;
       }
     </style>
   </head>
@@ -100,7 +105,7 @@
           setChatMessages([
           ...newChatMessages,
           {
-            message: 'Loading...',
+            message: <img className="spinner" src="images\loading-spinner.gif"/>,
             sender: 'robot',
             id: crypto.randomUUID()
           }
@@ -194,35 +199,42 @@
          </div>
         );
       }
+      function Welcome({chatMessages}){
+        if(chatMessages.length === 0){
+          return(
+            <p>
+              Welcome to the chatbot project! 
+              Send a message using the textbox below.
+            </p>
+          );
+        }
+      }
+      function useAutoScroll(dependencies) {
+         const chatMessagesRef = React.useRef
+        (null);
 
+        React.useEffect(() => {
+         const containerElem = 
+         chatMessagesRef.current;
+         if(containerElem) {
+          containerElem.scrollTop = containerElem.
+          scrollHeight;
+         }          
+        }, [chatMessages]);
+
+      }
       function App(){
            
-        const [chatMessages, setChatMessages] = React.useState([{
-          message: 'hello chatbot',
-          sender: 'user',
-          id: 'id1'
-        },{
-          message: 'Hello! How can I help you?', 
-          sender: 'robot',
-          id: 'id2'
-        },
-        {
-          message: 'can you give me todays date?',
-          sender: 'user',
-          id: 'id3'
-        },
-        {
-          message: 'Today is August 10',
-          sender: 'robot',
-          id: 'id4'
-        }]
-        );
+        const [chatMessages, setChatMessages] = React.useState([]);
         //const chatMessages = array[0];
         //const setChatMessages = array[1];
         //array destructuring (order matters)
         //^^const [chatMessages,setChatMessages] = array^^
        return( 
         <div className="app-container">
+          <Welcome
+            chatMessages={chatMessages}
+          />
           <ChatMessages 
             chatMessages={chatMessages}
           />
