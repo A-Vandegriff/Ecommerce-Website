@@ -34,15 +34,7 @@ function App(){
                 // this setup code once because we only want to add these
                 // extra responses once.
                 }, []);
-                const [time, setTime] = useState();
-                function SaveTime(){
-                  setTime(dayjs(time).format('h:mma'));
-                  return(
-                    <div>
-                      <p>{time}</p>
-                    </div>
-                  )
-                }
+                
         return( 
         <div className="app-container">
           <Welcome
