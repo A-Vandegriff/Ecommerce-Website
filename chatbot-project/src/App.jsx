@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Chatbot } from'supersimpledev'
+import { dayjs } from 'dayjs';
 import { ChatInput } from './components/ChatInput'
 import ChatMessages from './components/ChatMessages'
 import './App.css'
@@ -21,7 +23,27 @@ function App(){
         //const setChatMessages = array[1];
         //array destructuring (order matters)
         //^^const [chatMessages,setChatMessages] = array^^
-       return( 
+                 useEffect(() => {
+            Chatbot.addResponses({
+                  'goodbye': 'Goodbye. Have a great day!',
+                  'give me a unique id': function() {
+                    return `Sure! Here's a unique ID: ${crypto.randomUUID()}`;
+                  }
+                });
+                // [] tells useEffect to only run once. We only want to run
+                // this setup code once because we only want to add these
+                // extra responses once.
+                }, []);
+                const [time, setTime] = useState();
+                function SaveTime(){
+                  setTime(dayjs(time).format('h:mma'));
+                  return(
+                    <div>
+                      <p>{time}</p>
+                    </div>
+                  )
+                }
+        return( 
         <div className="app-container">
           <Welcome
             chatMessages={chatMessages}

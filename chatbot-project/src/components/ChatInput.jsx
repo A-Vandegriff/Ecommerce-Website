@@ -2,6 +2,7 @@ import { useState } from 'react'
 import loadingSpinner from '../assets/loading-spinner.gif'
 import { Chatbot } from 'supersimpledev'
 import './ChatInput.css';
+import dayjs from 'dayjs';
 
 export function ChatInput({ chatMessages, setChatMessages }) {
 
@@ -18,7 +19,8 @@ export function ChatInput({ chatMessages, setChatMessages }) {
           {
             message: inputText,
             sender: 'user',
-            id: crypto.randomUUID()
+            id: crypto.randomUUID(),
+            time: dayjs().valueOf()
           }
           ]
           setChatMessages([
@@ -26,7 +28,8 @@ export function ChatInput({ chatMessages, setChatMessages }) {
           {
             message: <img className="spinner" src={loadingSpinner}/>,
             sender: 'robot',
-            id: crypto.randomUUID()
+            id: crypto.randomUUID(),
+            time: dayjs().valueOf()
           }
           ]);
           const response = await Chatbot.getResponseAsync(inputText);
@@ -36,7 +39,7 @@ export function ChatInput({ chatMessages, setChatMessages }) {
           {
             message: response,
             sender: 'robot',
-            id: crypto.randomUUID()
+            id: crypto.randomUUID(),
           }
           ]);
         }
