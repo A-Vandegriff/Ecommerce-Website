@@ -7,7 +7,7 @@ export function OrdersPage() {
             <title>Orders</title>
 
             <Header />
-
+            <link rel="icon" href="images/orders-favicon.png" />
             <div className="header">
                 <div className="left-section">
                     <a href="/" className="header-link">
