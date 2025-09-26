@@ -4,7 +4,7 @@ export function ErrorPage(){
     return(
         <>
             <p>
-                404 Page Not FOund
+                404 Page Not Found
             </p>
         </>
     )
