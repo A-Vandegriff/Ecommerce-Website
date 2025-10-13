@@ -2,12 +2,12 @@ import './OrdersPage.css';
 import { Link } from 'react-router';
 import { Header } from '../components/Header';
 import BuyAgain from '../assets/images/icons/buy-again.png';
-export function OrdersPage() {
+export function OrdersPage({ cart }) {
     return (
         <>
             <title>Orders</title>
 
-            <Header />
+            <Header cart={cart} />
             <link rel="icon" href="images/orders-favicon.png" />
             <div className="orders-page">
                 <div className="page-title">Your Orders</div>
