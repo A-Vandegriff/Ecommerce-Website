@@ -23,6 +23,24 @@ export function TrackingPage({ cart }){
     const orderProduct = order.products.find((orderProduct) => {
     return orderProduct.productId === productId;
   });
+  const totalDeliveryTimeMs = orderProduct.estimatedDeliveryTimeMs-order.orderTimeMs;
+  const timePassedMs = dayjs().valueOf() - order.orderTimeMs;
+  let percent = (timePassedMs / totalDeliveryTimeMs)*100;
+  if(percent > 100){
+    percent = 100;
+  }
+  let isPreparing = false;
+  let isShipped = false;
+  let isDelivered = false;
+  if(percent >= 33 && percent < 100){
+    isShipped = true;
+  }
+  if(percent < 33){
+    isPreparing = true;
+  }
+  if(percent === 100){
+    isDelivered = true;
+  }
     return(
         <>
        <Header cart={cart}/>
@@ -67,6 +85,7 @@ export function TrackingPage({ cart }){
                     </Link>
 
                     <div class="delivery-date">
+                    {percent >= 100 ? 'Delivered ' : 'Arriving on '}
                     {dayjs(orderProduct.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
                     </div>
 
@@ -81,19 +100,19 @@ export function TrackingPage({ cart }){
                     <img class="product-image" src={orderProduct.product.image} />
 
                     <div class="progress-labels-container">
-                    <div class="progress-label">
+                    <div class={`progress-label ${isPreparing && 'current-status'}`}>
                         Preparing
                     </div>
-                    <div class="progress-label current-status">
+                    <div class={`progress-label ${isShipped && 'current-status'}`}>
                         Shipped
                     </div>
-                    <div class="progress-label">
+                    <div class={`progress-label ${isDelivered && 'current-status'}`}>
                         Delivered
                     </div>
                     </div>
 
                     <div class="progress-bar-container">
-                    <div class="progress-bar"></div>
+                    <div class="progress-bar" style= {{ width: `${percent}%`}}></div>
                     </div>
                 </div>
                 </div>

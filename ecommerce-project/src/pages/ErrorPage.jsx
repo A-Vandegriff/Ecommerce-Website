@@ -1,6 +1,6 @@
 import { Header } from '../components/Header'
-export function ErrorPage(){
-    <Header />
+export function ErrorPage({ cart }){
+    <Header cart={cart}/>
     return(
         <>
             <p>
